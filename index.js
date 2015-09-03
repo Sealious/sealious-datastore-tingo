@@ -5,7 +5,7 @@ var Fs = require("fs");
 var TingoDB = require('tingodb')();
 var DbsCommonPart = require('sealious-datastore-dbs-common-part');
 
-var db = null;
+var private = {db: null};
 
 var DatastoreTingo = new Sealious.ChipTypes.Datastore("tingodb");
 
@@ -23,13 +23,11 @@ DatastoreTingo.start = function(){
 		Fs.mkdirSync(storage_path);			
 	}
 
-	db = new TingoDB.Db('./db', {});
-	//console.log("Statring datastore tingo");
+	private.db = new TingoDB.Db('./db', {});
+
 	return Promise.resolve();
 };
 
+DatastoreTingo = DbsCommonPart(DatastoreTingo,private);		
 
 module.exports = DatastoreTingo;
-
-
-
