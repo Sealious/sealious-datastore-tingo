@@ -25,7 +25,7 @@ DatastoreTingo.start = function(){
 
 	private.db = new TingoDB.Db('./db', {});
 
-	return Promise.resolve();
+	return this.post_start();
 };
 
 DatastoreTingo = DbsCommonPart(DatastoreTingo,private);		
