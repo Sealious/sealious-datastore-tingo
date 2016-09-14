@@ -1,0 +1,2 @@
+tingodb_datastore:
+    storage_dir: "./db"

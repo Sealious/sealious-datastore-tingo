@@ -9,18 +9,14 @@ var private = {db: null};
 
 var DatastoreTingo = new Sealious.ChipTypes.Datastore("tingodb");
 
-Sealious.ConfigManager.set_config("tingodb_datastore", {
-	"storage_dir": "./db"
-});
-
 DatastoreTingo.start = function(){
 	var storage_path = Path.resolve("./db");
 
 	try{
-		var stats = Fs.lstatSync(storage_path);			
+		var stats = Fs.lstatSync(storage_path);
 	}catch(error){
 		//the dir does not exist
-		Fs.mkdirSync(storage_path);			
+		Fs.mkdirSync(storage_path);
 	}
 
 	private.db = new TingoDB.Db('./db', {});
@@ -28,6 +24,6 @@ DatastoreTingo.start = function(){
 	return this.post_start();
 };
 
-DatastoreTingo = DbsCommonPart(DatastoreTingo,private);		
+DatastoreTingo = DbsCommonPart(DatastoreTingo,private);
 
 module.exports = DatastoreTingo;
