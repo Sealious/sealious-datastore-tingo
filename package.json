@@ -15,7 +15,7 @@
     "bluebird": "^2.9.9",
     "fs": "0.0.2",
     "path": "^0.11.14",
-    "sealious-datastore-dbs-common-part": "git://github.com/Sealious/sealious-datastore-dbs-common-part.git#alpha",
+    "sealious-mongo-api-abstract": "git://github.com/sealcode/sealious-mongo-api-abstract.git#alpha",
     "tingodb": "^0.4.1"
   }
 }

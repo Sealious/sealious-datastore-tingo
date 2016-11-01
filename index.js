@@ -1,33 +1,28 @@
 var Promise = require("bluebird");
-var Sealious = require("sealious");
 var Path = require("path");
 var Fs = require("fs");
 var TingoDB = require('tingodb')();
-var DbsCommonPart = require('sealious-datastore-dbs-common-part');
+var DbsCommonPart = require('sealious-mongo-api-abstract');
 
-var private = {db: null};
+module.exports = function(app){
+	const DatastoreTingo = app.createDatastore({name:"tingo"});
 
-var DatastoreTingo = new Sealious.ChipTypes.Datastore("tingodb");
+	var private = {db: null};
 
-Sealious.ConfigManager.set_config("tingodb_datastore", {
-	"storage_dir": "./db"
-});
+	DatastoreTingo.start = function(){
+		var storage_path = Path.resolve("./db");
 
-DatastoreTingo.start = function(){
-	var storage_path = Path.resolve("./db");
+		try{
+			var stats = Fs.lstatSync(storage_path);
+		}catch(error){
+			//the dir does not exist
+			Fs.mkdirSync(storage_path);
+		}
 
-	try{
-		var stats = Fs.lstatSync(storage_path);			
-	}catch(error){
-		//the dir does not exist
-		Fs.mkdirSync(storage_path);			
-	}
+		private.db = new TingoDB.Db('./db', {});
 
-	private.db = new TingoDB.Db('./db', {});
+		return this.post_start();
+	};
 
-	return this.post_start();
+	DbsCommonPart(app, DatastoreTingo,private);
 };
-
-DatastoreTingo = DbsCommonPart(DatastoreTingo,private);		
-
-module.exports = DatastoreTingo;
