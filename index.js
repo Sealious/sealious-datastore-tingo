@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 var Path = require("path");
 var Fs = require("fs");
 var TingoDB = require('tingodb')();
-var DbsCommonPart = require('sealious-datastore-dbs-common-part');
+var DbsCommonPart = require('sealious-mongo-api-abstract');
 
 module.exports = function(app){
 	const DatastoreTingo = app.createDatastore({name:"tingo"});
